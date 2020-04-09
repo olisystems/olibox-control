@@ -1,4 +1,11 @@
 
+import atexit
 import control_pkg as pkg
 
-pkg.init()
+
+@atexit.register
+def main():
+    pkg.config_mqtt()
+
+
+#pkg.init()
