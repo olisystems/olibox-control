@@ -8,7 +8,7 @@ import os
 import paho.mqtt.client as mqtt
 
 from .environments import get_locals
-from .environments import write_values
+from .helpers import write_values
 
 
 def on_log(client, userdata, level, buf):
@@ -19,7 +19,7 @@ def on_connect(client, userdata, flags, rc):
     if rc == 0:
         client.connected_flag = True
         print("connected OK Returned code=", rc)
-        client.subscribe("DOSE/OLI_70/PV/setPowerLimit")
+        client.subscribe("DOSE/OLI_70/PV/setPowerLimit", 0)
     else:
         print("Bad connection Returned code=", rc)
 
@@ -31,16 +31,16 @@ def on_disconnect(client, userdata, flags, rc=0):
 
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
-    obj = {payload['timestamp']: payload['SetPowerLimit']}
+    obj = {'setOutputLimit': {payload['timestamp']: payload['SetPowerLimit']}}
     write_values('data.json', obj)
-    print('done writing')
+    print(msg)
     #print("Message received-> " + msg.topic + " " + str(msg.payload))
 
 
 def config_mqtt():
     vars = get_locals()
     oli_box_id = vars['oli_box_id']
-    client_name = f'OLI_{oli_box_id}_PUB1'
+    client_name = f'OLI_{oli_box_id}_PUB'
     pwd = vars['mqtt_password']
     usr = vars['mqtt_username']
     mqtt_broker_ip = vars['mqtt_broker_ip']
@@ -51,15 +51,14 @@ def config_mqtt():
     mqtt.Client.connected_flag = False
 
     client = mqtt.Client(client_name)
+    client.username_pw_set(usr, pwd)
+    cert = 'ca-certificates.crt'
+    client.tls_set(cert)
 
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_disconnect = on_disconnect
     client.on_log = on_log
-
-    client.username_pw_set(usr, pwd)
-    cert = 'ca-certificates.crt'
-    client.tls_set(cert)
 
     try:
         client.connect(mqtt_broker_ip, int(mqtt_broker_port), keepalive=60)
