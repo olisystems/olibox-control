@@ -1,0 +1,14 @@
+title = "OLI Box Config"
+
+[mqtt_connection]
+mqtt_broker_ip = "unbelievable-politician.cloudmqtt.com"
+mqtt_broker_port = "8883"
+ssl_cert_path = "ca-certificates.crt"
+mqtt_username = "gmnzhypg"
+mqtt_password = "zEb0WyhKguIn"
+
+[topic_config]
+project_id = "dose"
+oli_box_id = "6"
+device_type = "PV"
+topic_name = "setPowerLimit"

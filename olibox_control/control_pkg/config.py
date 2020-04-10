@@ -1,5 +1,4 @@
 
-
 import click
 import toml
 
@@ -10,10 +9,10 @@ import toml
 @click.option('--ssl-cert-path', prompt='What is the path of the SSL certficate?', default='ca-certificates.crt')
 @click.option('--mqtt-username', prompt='MQTT username', default='gmnzhypg')
 @click.option('--mqtt-password', prompt='MQTT password', hide_input=True, confirmation_prompt=True)
-@click.option('--project-id', prompt='project id', help='Project ID', default='dose')
-@click.option('--oli-box-id', prompt='oli box id', help='Oli box ID', default='6')
-@click.option('--dest-type', prompt='destination type', help='destination type i.e. charging station', default='chargingStation')
-@click.option('--command', prompt='command', help='Command i.e. set charging limit', default='setChargingLimit')
+@click.option('--project-id', prompt='Project id', help='Project ID', default='dose')
+@click.option('--oli-box-id', prompt='OLI box id', help='Oli box ID', default='6')
+@click.option('--device-type', prompt='Device type', help='Device type i.e. PV', default='PV')
+@click.option('--topic-name', prompt='Topic-name', help='Topic name i.e. setPowerLimit', default='setPowerLimit')
 def init(mqtt_broker_ip,
          mqtt_broker_port,
          ssl_cert_path,
@@ -21,8 +20,8 @@ def init(mqtt_broker_ip,
          mqtt_password,
          oli_box_id,
          project_id,
-         dest_type,
-         command
+         device_type,
+         topic_name
          ):
     config = f"""
 
@@ -38,8 +37,8 @@ def init(mqtt_broker_ip,
     [topic_config]
     project_id = '{project_id}'
     oli_box_id = '{oli_box_id}'
-    dest_type = '{dest_type}'
-    command = '{command}'
+    device_type = '{device_type}'
+    topic_name = '{topic_name}'
     """
     parsed_config = toml.loads(config)
     formatted_config = toml.dumps(parsed_config)
