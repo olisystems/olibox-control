@@ -18,16 +18,16 @@ parts:
     plugin: python
     requirements: ['requirements.txt']
 
-    olibox-control-data:
+  olibox-control-data:
     plugin: dump
     source: .
 
-    launcher:
-      plugin: nil
-      source: .
-      override-build: |
-        mkdir -p $SNAPCRAFT_PART_INSTALL/bin
-        cp -av control.sh $SNAPCRAFT_PART_INSTALL/bin/
+  launcher:
+    plugin: nil
+    source: .
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp -av control.sh $SNAPCRAFT_PART_INSTALL/bin/
 
 apps:
   olibox-control:
