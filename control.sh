@@ -2,7 +2,7 @@
 
 [ -e "$SNAP_USER_DATA/config.toml" ] || touch $SNAP_USER_DATA/config.toml
 
-[ -e "$SNAP_USER_DATA/data.json" ] || echo "{}" >> $SNAP_USER_DATA/data.json
+[ -e "$SNAP_USER_DATA/data.json" ] || touch $SNAP_USER_DATA/data.json
 
 cp $SNAP/ca-certificates.crt $SNAP_USER_DATA/ca-certificates.crt
 
