@@ -1,30 +1,28 @@
 
-import json
 import os
 
 import toml
 
+snap_userdata = os.environ['SNAP_USER_DATA']
+
 
 def get_locals():
-    config = 'config.toml'
+    if os.path.isfile(snap_userdata + '/config.toml'):
 
-    try:
-        with open(config) as file:
+        f = toml.load(snap_userdata + '/config.toml')
+        items = f.keys()
+        unique_dict = {}
 
-            f = toml.load(file)
-            items = f.keys()
-            unique_dict = {}
+        for item in items:
+            if type(f[item]) is not str:
+                for i in f[item].keys():
+                    unique_dict[i] = f[item][i]
+            else:
+                unique_dict[item] = f[item]
 
-            for item in items:
-                if type(f[item]) is not str:
-                    for i in f[item].keys():
-                        unique_dict[i] = f[item][i]
-                else:
-                    unique_dict[item] = f[item]
+        locals().update(unique_dict)
 
-            locals().update(unique_dict)
+        return locals()
 
-            return locals()
-
-    except Exception as e:
-        print(e)
+    else:
+        print('file not found')
