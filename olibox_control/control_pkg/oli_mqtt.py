@@ -35,8 +35,8 @@ def on_disconnect(client, userdata, flags, rc=0):
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
     obj = {'setOutputLimit': {payload['timestamp']: payload['SetPowerLimit']}}
-    write_values(obj)
-    print(msg)
+    write_values('data.json', obj)
+    # print(msg)
     #print("Message received-> " + msg.topic + " " + str(msg.payload))
 
 
