@@ -1,0 +1,35 @@
+name: olibox-control
+base: core18
+version: '0.1dev'
+summary: Subscribe channels and send commands to control the olibox devices
+description: |
+  The olibox_control snap will mainly have the following functionalities:
+  Configuration module: This module saves the user input to configure the OLI box into the TOML file. 
+  Environment module: This module reads the configuration TOML file and saves the configurations in the form of environment variables to make them available for the other modules.
+  MQTT module: This module sets up the MQTT connection, subscribes to the topics and then save the messages into JSON format.
+
+grade: devel
+confinement: devmode
+
+parts:
+  olibox-control:
+    # See 'snapcraft plugins'
+    source: .
+    plugin: python
+    requirements: ['requirements.txt']
+
+    olibox-control-data:
+    plugin: dump
+    source: .
+
+    launcher:
+      plugin: nil
+      source: .
+      override-build: |
+        mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+        cp -av control.sh $SNAPCRAFT_PART_INSTALL/bin/
+
+apps:
+  olibox-control:
+    command: control.sh olibox-control
+    plugs: [network, home]
