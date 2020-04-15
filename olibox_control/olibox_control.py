@@ -8,4 +8,4 @@ def main():
     pkg.config_mqtt()
 
 
-#pkg.init()
+pkg.init()
