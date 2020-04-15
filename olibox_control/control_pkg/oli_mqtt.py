@@ -10,6 +10,9 @@ import paho.mqtt.client as mqtt
 from .environments import get_locals
 from .helpers import write_values
 
+snap_userdata = os.environ['SNAP_USER_DATA']
+path = snap_userdata + '/'
+
 
 def on_log(client, userdata, level, buf):
     print("log: ", buf)
@@ -32,7 +35,7 @@ def on_disconnect(client, userdata, flags, rc=0):
 def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
     obj = {'setOutputLimit': {payload['timestamp']: payload['SetPowerLimit']}}
-    write_values('data.json', obj)
+    write_values(obj)
     print(msg)
     #print("Message received-> " + msg.topic + " " + str(msg.payload))
 
@@ -52,7 +55,7 @@ def config_mqtt():
 
     client = mqtt.Client(client_name)
     client.username_pw_set(usr, pwd)
-    cert = 'ca-certificates.crt'
+    cert = os.path.join(path, 'ca-certificates.crt')
     client.tls_set(cert)
 
     client.on_connect = on_connect

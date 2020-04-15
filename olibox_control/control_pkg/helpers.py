@@ -2,13 +2,16 @@
 import json
 import os
 
+snap_userdata = os.environ['SNAP_USER_DATA']
+path = snap_userdata + '/'
 
-def write_values(file, new_data):
+
+def write_values(new_data):
     """
     The function uses json.dump method to write the data object to a file.
     """
 
-    file_to_write = os.path.join(file)
+    file_to_write = os.path.join(path, 'data.json')
 
     if os.path.isfile(file_to_write):
         with open(file_to_write) as f:

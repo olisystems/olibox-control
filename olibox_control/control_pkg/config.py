@@ -2,6 +2,8 @@
 import click
 import toml
 
+snap_userdata = os.environ['SNAP_USER_DATA']
+
 
 @click.command()
 @click.option('--mqtt-broker-ip', prompt='MQTT broker IP', help='MQTT broker IP', default='unbelievable-politician.cloudmqtt.com')
@@ -43,5 +45,5 @@ def init(mqtt_broker_ip,
     parsed_config = toml.loads(config)
     formatted_config = toml.dumps(parsed_config)
 
-    with open('config.toml', 'w+') as f:
+    with open(snap_userdata + '/config.toml', 'w+') as f:
         f.write(formatted_config)
