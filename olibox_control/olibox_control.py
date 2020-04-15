@@ -1,6 +1,6 @@
 
 import atexit
-import control_pkg as pkg
+import olibox_control.control_pkg as pkg
 
 
 @atexit.register
