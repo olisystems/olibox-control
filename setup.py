@@ -28,7 +28,7 @@ setup(name='olibox-control',
 
       entry_points={
           'console_scripts': [
-              'olibox-control = olibox_control.olibox_control:init'
+              'olibox-control = olibox_control.olibox_control:main'
           ]
       },
 
