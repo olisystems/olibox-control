@@ -1,6 +1,6 @@
 #! /bin/sh
 
-[ -e "$SNAP_USER_DATA/config.toml" ] || touch $SNAP_USER_DATA/config.toml
+#[ -e "$SNAP_USER_DATA/config.toml" ] || touch $SNAP_USER_DATA/config.toml
 
 [ -e "$SNAP_USER_DATA/data.json" ] || touch $SNAP_USER_DATA/data.json
 
