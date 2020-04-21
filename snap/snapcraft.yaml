@@ -22,13 +22,12 @@ parts:
     plugin: dump
     source: .
 
-  launcher:
-    plugin: nil
-    source: .
-    override-build: |
-      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
-      cp -av control.sh $SNAPCRAFT_PART_INSTALL/bin/
-
+plugs:
+  shared-files:
+    interface: content
+    content: shared-files
+    target: $SNAP_DATA
+    
 apps:
   olibox-control:
     command: control.sh olibox-control
